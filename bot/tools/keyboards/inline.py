@@ -17,12 +17,8 @@ main_menu_for_pay = InlineKeyboardMarkup(inline_keyboard=[
 
 main_menu_in_my_lawyers = InlineKeyboardMarkup(inline_keyboard=[
   [InlineKeyboardButton(text='Каталог', callback_data='catalog')],
-  [InlineKeyboardButton(text='Личный кабинет', callback_data='personal_area')]
-]) 
-
-
-message_to_layers = InlineKeyboardMarkup(inline_keyboard=[
-  [InlineKeyboardButton(text='Написать Юристу', callback_data='message_to_layers')]
+  [InlineKeyboardButton(text='Личный кабинет', callback_data='personal_area')],
+  [InlineKeyboardButton(text='Написать Юристу', callback_data='message_to_lawyers')]
 ]) 
 
 

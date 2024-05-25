@@ -19,5 +19,5 @@ async def start_bot():
     await create_db()
     register_handlers()
     await bot.delete_webhook(drop_pending_updates=True)
-    print('日本の保育園')
+    print('Starting bot - successfully')
     await dp.start_polling(bot)
