@@ -5,7 +5,7 @@ from aiogram.fsm.context import FSMContext
 
 from bot import logger
 
-from bot.handlers.tools.email import is_email
+from bot.tools.utils import is_email
 from bot.tools.fsm import User, Lawyer
 from bot.tools.keyboards.inline import get_inlineMix_btns
 from bot.tools.database.utils import (

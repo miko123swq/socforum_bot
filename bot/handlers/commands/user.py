@@ -6,9 +6,9 @@ import yookassa
 
 from bot import logger
 
-from bot.handlers.tools.email import is_email
+from bot.tools.utils import is_email, is_valid_phone_number
 from bot.tools.fsm import User
-from bot.tools.keyboards.inline import get_inlineMix_btns, main_menu_for_pay
+from bot.tools.keyboards.inline import get_inlineMix_btns, get_inlinePay_btns
 from bot.tools.database.utils import (
     add_user,
     orm_get_user,
@@ -72,68 +72,46 @@ async def add_middle_name(message: types.Message, state: FSMContext):
 
 async def add_number(message: types.Message, state: FSMContext):
     try:
-        if message.chat.type == "private":
-            if message.text.isdigit():
-                text = message.text
-                if text.startswith("8"):
-                    text = "7" + text[1:]
-                if len(text) == 11:
-                    try:
-                        await state.update_data(number=text)
-                        await message.answer(
-                            "Введите ваш почтовый адрес в формате email@example.com"
-                        )
-                        await state.set_state(User.email)
-                    except AiogramError as e:
-                        logger.error(
-                            f"Произошла ошибка при обновлении данных состояния: {e}"
-                        )
-                        await message.answer(
-                            "Произошла внутренняя ошибка. Пожалуйста, попробуйте позже."
-                        )
-
-                else:
-                    await message.answer(
-                        "Произошла ошибка. Номер телефона должен состоять из 11 цифр. "
-                        "Попробуйте ещё раз."
-                    )
-                    logger.error("Некорректный номер телефона")
-            else:
-                await message.answer(
-                    "Произошла ошибка. Введённый текст не является числом. "
-                    "Пожалуйста, введите корректный номер телефона."
-                )
+        is_valid, result = is_valid_phone_number(message.text)
+        if is_valid:
+            await state.update_data(number=result)
+            await message.answer(
+                "Введите ваш почтовый адрес в формате email@example.com"
+            )
+            await state.set_state(User.email)
+        else:
+            await message.answer(f"Произошла ошибка. {result}")
+            logger.error("Некорректный номер телефона: %s", result)
     except AiogramError as e:
-        logger.error(f"Произошла ошибка в функции add_number: {e}")
+        logger.error("Произошла ошибка в функции add_number: %s", e, exc_info=True)
+        await message.answer("Произошла ошибка. Пожалуйста, попробуйте еще раз.")
 
 
 async def add_email(message: types.Message, state: FSMContext):
     try:
-        logger.debug("Зап")
-        if message.chat.type == "private":
-            if is_email(message.text):
-                await state.update_data(email=message.text)
-                data = await state.get_data()
-                data["telegram_id"] = message.from_user.id
-                data["telegram_name"] = message.from_user.full_name
-                await message.answer(
-                    "Спасибо! Ваши данные были успешно сохранены.\nВоспользуйтесь меню ниже.",
-                    reply_markup=get_inlineMix_btns(
-                        btns={
-                            "Каталог": "catalog",
-                            "Личный кабинет": "personal_area",
-                            "Оплата": "payment",
-                            "Мои Юристы": "my_lawyers",
-                        }
-                    ),
-                )
-                await state.clear()
-                await add_user(data)
-            else:
-                await message.answer(
-                    "Произошла ошибка. Возможно, вы ввели некорректный email. Попробуйте ещё раз."
-                )
-                logger.error("Некорректный email")
+        if is_email(message.text):
+            await state.update_data(email=message.text)
+            data = await state.get_data()
+            data["telegram_id"] = message.from_user.id
+            data["telegram_name"] = message.from_user.full_name
+            await message.answer(
+                "Спасибо! Ваши данные были успешно сохранены.\nВоспользуйтесь меню ниже.",
+                reply_markup=get_inlineMix_btns(
+                    btns={
+                        "Каталог": "catalog",
+                        "Личный кабинет": "personal_area",
+                        "Оплата": "payment",
+                        "Мои Юристы": "my_lawyers",
+                    }
+                ),
+            )
+            await state.clear()
+            await add_user(data)
+        else:
+            await message.answer(
+                "Произошла ошибка. Возможно, вы ввели некорректный email. Попробуйте ещё раз."
+            )
+            logger.error("Некорректный email")
     except AiogramError as e:
         logger.error(f"Ошибка в функции add_email: {e}")
 
@@ -254,11 +232,21 @@ async def pay(callback: CallbackQuery, bot: Bot):
             suggested_tip_amounts=[100, 200],
             start_parameter="",
             provider_data=None,
-            photo_url="https://tv.ib-bank.ru/files/images/videos/2018-11-30%20SOC-Forum%202018%20intro_tv.jpg",
+            photo_url=(
+                "https://tv.ib-bank.ru/files/images/videos/"
+                "2018-11-30%20SOC-Forum%202018%20intro_tv.jpg"
+            ),
             photo_size=100,
             photo_width=800,
             photo_height=450,
-            reply_markup=main_menu_for_pay,
+            reply_markup=get_inlinePay_btns(
+                btns=[
+                    ("Оплатить услуги Юристов", "pay", True),
+                    ("Возврат в главное меню", "return_to_main_menu_from_pay", False),
+                    ("Каталог", "catalog", False),
+                ],
+                sizes=(1,),
+            ),
             need_name=True,
             need_email=True,
         )

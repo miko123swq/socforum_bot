@@ -19,8 +19,20 @@ def get_inlineMix_btns(
     return keyboard.adjust(*sizes).as_markup()
 
 
-# in first button, second argument is 'pay' for payment
-main_menu_for_pay = InlineKeyboardMarkup(inline_keyboard=[
-  [InlineKeyboardButton(text='Оплатить услуги Юристов', pay=True)],
-  [InlineKeyboardButton(text='Возврат в главное меню', callback_data='return_to_main_menu_from_pay')]
-]) 
+# сделал отдельную функцию, чтобы добавить каталог в блок кнопок
+def get_inlinePay_btns(
+    *,
+    btns: list[tuple[str, str, bool]], 
+    sizes: tuple[int] = (2,)):
+
+    keyboard = InlineKeyboardBuilder()
+
+    for text, value, pay in btns:
+        if pay:
+            keyboard.add(InlineKeyboardButton(text=text, pay=True))
+        elif '://' in value:
+            keyboard.add(InlineKeyboardButton(text=text, url=value))
+        else:
+            keyboard.add(InlineKeyboardButton(text=text, callback_data=value))
+
+    return keyboard.adjust(*sizes).as_markup()

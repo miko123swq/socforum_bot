@@ -1,613 +1,71 @@
-INFO - (26/05/2024 16:22:13): select pg_catalog.version() (line 1846) [base.py]
-INFO - (26/05/2024 16:22:13): [raw sql] () (line 1846) [base.py]
-INFO - (26/05/2024 16:22:13): select current_schema() (line 1846) [base.py]
-INFO - (26/05/2024 16:22:13): [raw sql] () (line 1846) [base.py]
-INFO - (26/05/2024 16:22:13): show standard_conforming_strings (line 1846) [base.py]
-INFO - (26/05/2024 16:22:13): [raw sql] () (line 1846) [base.py]
-INFO - (26/05/2024 16:22:13): BEGIN (implicit) (line 2699) [base.py]
-INFO - (26/05/2024 16:22:13): SELECT pg_catalog.pg_class.relname 
-FROM pg_catalog.pg_class JOIN pg_catalog.pg_namespace ON pg_catalog.pg_namespace.oid = pg_catalog.pg_class.relnamespace 
-WHERE pg_catalog.pg_class.relname = $1::VARCHAR AND pg_catalog.pg_class.relkind = ANY (ARRAY[$2::VARCHAR, $3::VARCHAR, $4::VARCHAR, $5::VARCHAR, $6::VARCHAR]) AND pg_catalog.pg_table_is_visible(pg_catalog.pg_class.oid) AND pg_catalog.pg_namespace.nspname != $7::VARCHAR (line 1846) [base.py]
-INFO - (26/05/2024 16:22:13): [generated in 0.00161s] ('users', 'r', 'p', 'f', 'v', 'm', 'pg_catalog') (line 1846) [base.py]
-INFO - (26/05/2024 16:22:13): SELECT pg_catalog.pg_class.relname 
-FROM pg_catalog.pg_class JOIN pg_catalog.pg_namespace ON pg_catalog.pg_namespace.oid = pg_catalog.pg_class.relnamespace 
-WHERE pg_catalog.pg_class.relname = $1::VARCHAR AND pg_catalog.pg_class.relkind = ANY (ARRAY[$2::VARCHAR, $3::VARCHAR, $4::VARCHAR, $5::VARCHAR, $6::VARCHAR]) AND pg_catalog.pg_table_is_visible(pg_catalog.pg_class.oid) AND pg_catalog.pg_namespace.nspname != $7::VARCHAR (line 1846) [base.py]
-INFO - (26/05/2024 16:22:13): [cached since 0.01858s ago] ('lawyers', 'r', 'p', 'f', 'v', 'm', 'pg_catalog') (line 1846) [base.py]
-INFO - (26/05/2024 16:22:13): COMMIT (line 2705) [base.py]
-ERROR - (26/05/2024 16:22:18): Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientOSError: [WinError 1236] The network connection was aborted by the local system (line 219) [dispatcher.py]
-INFO - (26/05/2024 16:22:53): BEGIN (implicit) (line 2699) [base.py]
-INFO - (26/05/2024 16:22:53): SELECT users.id, users.telegram_id, users.telegram_name, users.name, users.surname, users.middle_name, users.number, users.email, users.active, users.is_banned, users.user_coin, users.pay_status, users.created, users.updated 
+INFO - (26/05/2024 18:19:20): BEGIN (implicit) (line 2699) [base.py]
+INFO - (26/05/2024 18:19:20): PRAGMA main.table_info("users") (line 1846) [base.py]
+INFO - (26/05/2024 18:19:20): [raw sql] () (line 1846) [base.py]
+INFO - (26/05/2024 18:19:20): PRAGMA temp.table_info("users") (line 1846) [base.py]
+INFO - (26/05/2024 18:19:20): [raw sql] () (line 1846) [base.py]
+INFO - (26/05/2024 18:19:20): PRAGMA main.table_info("lawyers") (line 1846) [base.py]
+INFO - (26/05/2024 18:19:20): [raw sql] () (line 1846) [base.py]
+INFO - (26/05/2024 18:19:20): PRAGMA temp.table_info("lawyers") (line 1846) [base.py]
+INFO - (26/05/2024 18:19:20): [raw sql] () (line 1846) [base.py]
+INFO - (26/05/2024 18:19:20): 
+CREATE TABLE users (
+	id INTEGER NOT NULL, 
+	telegram_id BIGINT NOT NULL, 
+	telegram_name VARCHAR(255) NOT NULL, 
+	name VARCHAR(255) NOT NULL, 
+	surname VARCHAR(255) NOT NULL, 
+	middle_name VARCHAR(255) NOT NULL, 
+	number VARCHAR(255) NOT NULL, 
+	email VARCHAR(255) NOT NULL, 
+	active INTEGER NOT NULL, 
+	is_banned INTEGER NOT NULL, 
+	user_coin INTEGER NOT NULL, 
+	pay_status BOOLEAN NOT NULL, 
+	created DATETIME NOT NULL, 
+	updated DATETIME NOT NULL, 
+	PRIMARY KEY (id)
+)
+
+ (line 1846) [base.py]
+INFO - (26/05/2024 18:19:20): [no key 0.00312s] () (line 1846) [base.py]
+INFO - (26/05/2024 18:19:20): 
+CREATE TABLE lawyers (
+	id INTEGER NOT NULL, 
+	telegram_id BIGINT NOT NULL, 
+	telegram_name VARCHAR(255) NOT NULL, 
+	name VARCHAR(255) NOT NULL, 
+	surname VARCHAR(255) NOT NULL, 
+	middle_name VARCHAR(255) NOT NULL, 
+	number VARCHAR(255) NOT NULL, 
+	email VARCHAR(255) NOT NULL, 
+	description TEXT NOT NULL, 
+	short_description TEXT NOT NULL, 
+	diplomas VARCHAR(255) NOT NULL, 
+	experience VARCHAR(255) NOT NULL, 
+	legal_services_section VARCHAR(255) NOT NULL, 
+	photo VARCHAR(255) NOT NULL, 
+	earnings FLOAT NOT NULL, 
+	clients JSON NOT NULL, 
+	active INTEGER NOT NULL, 
+	is_banned INTEGER NOT NULL, 
+	created DATETIME NOT NULL, 
+	updated DATETIME NOT NULL, 
+	PRIMARY KEY (id)
+)
+
+ (line 1846) [base.py]
+INFO - (26/05/2024 18:19:20): [no key 0.00196s] () (line 1846) [base.py]
+INFO - (26/05/2024 18:19:20): COMMIT (line 2705) [base.py]
+INFO - (26/05/2024 18:19:25): BEGIN (implicit) (line 2699) [base.py]
+INFO - (26/05/2024 18:19:25): SELECT users.id, users.telegram_id, users.telegram_name, users.name, users.surname, users.middle_name, users.number, users.email, users.active, users.is_banned, users.user_coin, users.pay_status, users.created, users.updated 
 FROM users 
-WHERE users.telegram_id = $1::BIGINT (line 1846) [base.py]
-INFO - (26/05/2024 16:22:53): [generated in 0.00113s] (6432327874,) (line 1846) [base.py]
-INFO - (26/05/2024 16:22:54): ROLLBACK (line 2702) [base.py]
-ERROR - (26/05/2024 16:22:54): Ошибка при получении пользователя из базы данных: (sqlalchemy.dialects.postgresql.asyncpg.ProgrammingError) <class 'asyncpg.exceptions.UndefinedColumnError'>: column users.pay_status does not exist
-[SQL: SELECT users.id, users.telegram_id, users.telegram_name, users.name, users.surname, users.middle_name, users.number, users.email, users.active, users.is_banned, users.user_coin, users.pay_status, users.created, users.updated 
-FROM users 
-WHERE users.telegram_id = $1::BIGINT]
-[parameters: (6432327874,)]
-(Background on this error at: https://sqlalche.me/e/20/f405) (line 37) [utils.py]
-Traceback (most recent call last):
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 514, in _prepare_and_execute
-    prepared_stmt, attributes = await adapt_connection._prepare(
-                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 765, in _prepare
-    prepared_stmt = await self._connection.prepare(
-                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\asyncpg\connection.py", line 636, in prepare
-    return await self._prepare(
-           ^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\asyncpg\connection.py", line 654, in _prepare
-    stmt = await self._get_statement(
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\asyncpg\connection.py", line 433, in _get_statement
-    statement = await self._protocol.prepare(
-                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "asyncpg\protocol\protocol.pyx", line 166, in prepare
-asyncpg.exceptions.UndefinedColumnError: column users.pay_status does not exist
-
-The above exception was the direct cause of the following exception:
-
-Traceback (most recent call last):
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
-    self.dialect.do_execute(
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 924, in do_execute
-    cursor.execute(statement, parameters)
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 572, in execute
-    self._adapt_connection.await_(
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 131, in await_only
-    return current.driver.switch(awaitable)  # type: ignore[no-any-return]
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 196, in greenlet_spawn
-    value = await result
-            ^^^^^^^^^^^^
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 550, in _prepare_and_execute
-    self._handle_exception(error)
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 501, in _handle_exception
-    self._adapt_connection._handle_exception(error)
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 789, in _handle_exception
-    raise translated_error from error
-sqlalchemy.dialects.postgresql.asyncpg.AsyncAdapt_asyncpg_dbapi.ProgrammingError: <class 'asyncpg.exceptions.UndefinedColumnError'>: column users.pay_status does not exist
-
-The above exception was the direct cause of the following exception:
-
-Traceback (most recent call last):
-  File "c:\Users\miko12\Desktop\socforum_bot\bot\tools\database\utils.py", line 34, in orm_get_user
-    result = await session.execute(query)
-             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\ext\asyncio\session.py", line 461, in execute
-    result = await greenlet_spawn(
-             ^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 201, in greenlet_spawn
-    result = context.throw(*sys.exc_info())
-             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2351, in execute
-    return self._execute_internal(
-           ^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2236, in _execute_internal
-    result: Result[Any] = compile_state_cls.orm_execute_statement(
-                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\orm\context.py", line 293, in orm_execute_statement
-    result = conn.execute(
-             ^^^^^^^^^^^^^
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1418, in execute
-    return meth(
-           ^^^^^
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 515, in _execute_on_connection
-    return connection._execute_clauseelement(
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1640, in _execute_clauseelement
-    ret = self._execute_context(
-          ^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1846, in _execute_context
-    return self._exec_single_context(
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1986, in _exec_single_context
-    self._handle_dbapi_exception(
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2353, in _handle_dbapi_exception
-    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
-    self.dialect.do_execute(
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 924, in do_execute
-    cursor.execute(statement, parameters)
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 572, in execute
-    self._adapt_connection.await_(
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 131, in await_only
-    return current.driver.switch(awaitable)  # type: ignore[no-any-return]
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 196, in greenlet_spawn
-    value = await result
-            ^^^^^^^^^^^^
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 550, in _prepare_and_execute
-    self._handle_exception(error)
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 501, in _handle_exception
-    self._adapt_connection._handle_exception(error)
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 789, in _handle_exception
-    raise translated_error from error
-sqlalchemy.exc.ProgrammingError: (sqlalchemy.dialects.postgresql.asyncpg.ProgrammingError) <class 'asyncpg.exceptions.UndefinedColumnError'>: column users.pay_status does not exist
-[SQL: SELECT users.id, users.telegram_id, users.telegram_name, users.name, users.surname, users.middle_name, users.number, users.email, users.active, users.is_banned, users.user_coin, users.pay_status, users.created, users.updated 
-FROM users 
-WHERE users.telegram_id = $1::BIGINT]
-[parameters: (6432327874,)]
-(Background on this error at: https://sqlalche.me/e/20/f405)
-INFO - (26/05/2024 16:23:34): BEGIN (implicit) (line 2699) [base.py]
-INFO - (26/05/2024 16:23:34): INSERT INTO users (telegram_id, telegram_name, name, surname, middle_name, number, email, active, is_banned, user_coin, pay_status, created, updated) VALUES ($1::BIGINT, $2::VARCHAR, $3::VARCHAR, $4::VARCHAR, $5::VARCHAR, $6::VARCHAR, $7::VARCHAR, $8::INTEGER, $9::INTEGER, $10::INTEGER, $11::BOOLEAN, now(), now()) RETURNING users.id, users.created, users.updated (line 1846) [base.py]
-INFO - (26/05/2024 16:23:34): [generated in 0.00079s] (6432327874, '-', 'Иван', 'Коробкин', 'Коробкович', '74444444444', 'email@example.com', 1, 0, 0, False) (line 1846) [base.py]
-INFO - (26/05/2024 16:23:34): ROLLBACK (line 2702) [base.py]
-ERROR - (26/05/2024 16:23:34): Ошибка при добавлении пользователя: (sqlalchemy.dialects.postgresql.asyncpg.ProgrammingError) <class 'asyncpg.exceptions.UndefinedColumnError'>: column "pay_status" of relation "users" does not exist
-[SQL: INSERT INTO users (telegram_id, telegram_name, name, surname, middle_name, number, email, active, is_banned, user_coin, pay_status, created, updated) VALUES ($1::BIGINT, $2::VARCHAR, $3::VARCHAR, $4::VARCHAR, $5::VARCHAR, $6::VARCHAR, $7::VARCHAR, $8::INTEGER, $9::INTEGER, $10::INTEGER, $11::BOOLEAN, now(), now()) RETURNING users.id, users.created, users.updated]
-[parameters: (6432327874, '-', 'Иван', 'Коробкин', 'Коробкович', '74444444444', 'email@example.com', 1, 0, 0, False)]
-(Background on this error at: https://sqlalche.me/e/20/f405) (line 27) [utils.py]
-Traceback (most recent call last):
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 514, in _prepare_and_execute
-    prepared_stmt, attributes = await adapt_connection._prepare(
-                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 765, in _prepare
-    prepared_stmt = await self._connection.prepare(
-                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\asyncpg\connection.py", line 636, in prepare
-    return await self._prepare(
-           ^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\asyncpg\connection.py", line 654, in _prepare
-    stmt = await self._get_statement(
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\asyncpg\connection.py", line 433, in _get_statement
-    statement = await self._protocol.prepare(
-                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "asyncpg\protocol\protocol.pyx", line 166, in prepare
-asyncpg.exceptions.UndefinedColumnError: column "pay_status" of relation "users" does not exist
-
-The above exception was the direct cause of the following exception:
-
-Traceback (most recent call last):
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
-    self.dialect.do_execute(
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 924, in do_execute
-    cursor.execute(statement, parameters)
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 572, in execute
-    self._adapt_connection.await_(
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 131, in await_only
-    return current.driver.switch(awaitable)  # type: ignore[no-any-return]
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 196, in greenlet_spawn
-    value = await result
-            ^^^^^^^^^^^^
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 550, in _prepare_and_execute
-    self._handle_exception(error)
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 501, in _handle_exception
-    self._adapt_connection._handle_exception(error)
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 789, in _handle_exception
-    raise translated_error from error
-sqlalchemy.dialects.postgresql.asyncpg.AsyncAdapt_asyncpg_dbapi.ProgrammingError: <class 'asyncpg.exceptions.UndefinedColumnError'>: column "pay_status" of relation "users" does not exist
-
-The above exception was the direct cause of the following exception:
-
-Traceback (most recent call last):
-  File "c:\Users\miko12\Desktop\socforum_bot\bot\tools\database\utils.py", line 25, in add_user
-    await session.commit()
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\ext\asyncio\session.py", line 1009, in commit
-    await greenlet_spawn(self.sync_session.commit)
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 203, in greenlet_spawn
-    result = context.switch(value)
-             ^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2017, in commit
-    trans.commit(_to_root=True)
-  File "<string>", line 2, in commit
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\orm\state_changes.py", line 139, in _go
-    ret_value = fn(self, *arg, **kw)
-                ^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 1302, in commit
-    self._prepare_impl()
-  File "<string>", line 2, in _prepare_impl
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\orm\state_changes.py", line 139, in _go
-    ret_value = fn(self, *arg, **kw)
-                ^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 1277, in _prepare_impl
-    self.session.flush()
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4341, in flush
-    self._flush(objects)
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4476, in _flush
-    with util.safe_reraise():
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\util\langhelpers.py", line 146, in __exit__
-    raise exc_value.with_traceback(exc_tb)
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4437, in _flush
-    flush_context.execute()
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 466, in execute
-    rec.execute(self)
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 642, in execute
-    util.preloaded.orm_persistence.save_obj(
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\orm\persistence.py", line 93, in save_obj
-    _emit_insert_statements(
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\orm\persistence.py", line 1233, in _emit_insert_statements
-    result = connection.execute(
-             ^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1418, in execute
-    return meth(
-           ^^^^^
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 515, in _execute_on_connection
-    return connection._execute_clauseelement(
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1640, in _execute_clauseelement
-    ret = self._execute_context(
-          ^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1846, in _execute_context
-    return self._exec_single_context(
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1986, in _exec_single_context
-    self._handle_dbapi_exception(
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2353, in _handle_dbapi_exception
-    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
-    self.dialect.do_execute(
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 924, in do_execute
-    cursor.execute(statement, parameters)
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 572, in execute
-    self._adapt_connection.await_(
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 131, in await_only
-    return current.driver.switch(awaitable)  # type: ignore[no-any-return]
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 196, in greenlet_spawn
-    value = await result
-            ^^^^^^^^^^^^
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 550, in _prepare_and_execute
-    self._handle_exception(error)
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 501, in _handle_exception
-    self._adapt_connection._handle_exception(error)
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 789, in _handle_exception
-    raise translated_error from error
-sqlalchemy.exc.ProgrammingError: (sqlalchemy.dialects.postgresql.asyncpg.ProgrammingError) <class 'asyncpg.exceptions.UndefinedColumnError'>: column "pay_status" of relation "users" does not exist
-[SQL: INSERT INTO users (telegram_id, telegram_name, name, surname, middle_name, number, email, active, is_banned, user_coin, pay_status, created, updated) VALUES ($1::BIGINT, $2::VARCHAR, $3::VARCHAR, $4::VARCHAR, $5::VARCHAR, $6::VARCHAR, $7::VARCHAR, $8::INTEGER, $9::INTEGER, $10::INTEGER, $11::BOOLEAN, now(), now()) RETURNING users.id, users.created, users.updated]
-[parameters: (6432327874, '-', 'Иван', 'Коробкин', 'Коробкович', '74444444444', 'email@example.com', 1, 0, 0, False)]
-(Background on this error at: https://sqlalche.me/e/20/f405)
-INFO - (26/05/2024 16:23:48): BEGIN (implicit) (line 2699) [base.py]
-INFO - (26/05/2024 16:23:48): SELECT users.id, users.telegram_id, users.telegram_name, users.name, users.surname, users.middle_name, users.number, users.email, users.active, users.is_banned, users.user_coin, users.pay_status, users.created, users.updated 
-FROM users 
-WHERE users.telegram_id = $1::BIGINT (line 1846) [base.py]
-INFO - (26/05/2024 16:23:48): [cached since 54.88s ago] (6432327874,) (line 1846) [base.py]
-INFO - (26/05/2024 16:23:48): ROLLBACK (line 2702) [base.py]
-ERROR - (26/05/2024 16:23:48): Ошибка при получении пользователя из базы данных: (sqlalchemy.dialects.postgresql.asyncpg.ProgrammingError) <class 'asyncpg.exceptions.UndefinedColumnError'>: column users.pay_status does not exist
-[SQL: SELECT users.id, users.telegram_id, users.telegram_name, users.name, users.surname, users.middle_name, users.number, users.email, users.active, users.is_banned, users.user_coin, users.pay_status, users.created, users.updated 
-FROM users 
-WHERE users.telegram_id = $1::BIGINT]
-[parameters: (6432327874,)]
-(Background on this error at: https://sqlalche.me/e/20/f405) (line 37) [utils.py]
-Traceback (most recent call last):
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 514, in _prepare_and_execute
-    prepared_stmt, attributes = await adapt_connection._prepare(
-                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 765, in _prepare
-    prepared_stmt = await self._connection.prepare(
-                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\asyncpg\connection.py", line 636, in prepare
-    return await self._prepare(
-           ^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\asyncpg\connection.py", line 654, in _prepare
-    stmt = await self._get_statement(
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\asyncpg\connection.py", line 433, in _get_statement
-    statement = await self._protocol.prepare(
-                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "asyncpg\protocol\protocol.pyx", line 166, in prepare
-asyncpg.exceptions.UndefinedColumnError: column users.pay_status does not exist
-
-The above exception was the direct cause of the following exception:
-
-Traceback (most recent call last):
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
-    self.dialect.do_execute(
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 924, in do_execute
-    cursor.execute(statement, parameters)
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 572, in execute
-    self._adapt_connection.await_(
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 131, in await_only
-    return current.driver.switch(awaitable)  # type: ignore[no-any-return]
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 196, in greenlet_spawn
-    value = await result
-            ^^^^^^^^^^^^
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 550, in _prepare_and_execute
-    self._handle_exception(error)
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 501, in _handle_exception
-    self._adapt_connection._handle_exception(error)
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 789, in _handle_exception
-    raise translated_error from error
-sqlalchemy.dialects.postgresql.asyncpg.AsyncAdapt_asyncpg_dbapi.ProgrammingError: <class 'asyncpg.exceptions.UndefinedColumnError'>: column users.pay_status does not exist
-
-The above exception was the direct cause of the following exception:
-
-Traceback (most recent call last):
-  File "c:\Users\miko12\Desktop\socforum_bot\bot\tools\database\utils.py", line 34, in orm_get_user
-    result = await session.execute(query)
-             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\ext\asyncio\session.py", line 461, in execute
-    result = await greenlet_spawn(
-             ^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 201, in greenlet_spawn
-    result = context.throw(*sys.exc_info())
-             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2351, in execute
-    return self._execute_internal(
-           ^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2236, in _execute_internal
-    result: Result[Any] = compile_state_cls.orm_execute_statement(
-                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\orm\context.py", line 293, in orm_execute_statement
-    result = conn.execute(
-             ^^^^^^^^^^^^^
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1418, in execute
-    return meth(
-           ^^^^^
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 515, in _execute_on_connection
-    return connection._execute_clauseelement(
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1640, in _execute_clauseelement
-    ret = self._execute_context(
-          ^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1846, in _execute_context
-    return self._exec_single_context(
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1986, in _exec_single_context
-    self._handle_dbapi_exception(
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2353, in _handle_dbapi_exception
-    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
-    self.dialect.do_execute(
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 924, in do_execute
-    cursor.execute(statement, parameters)
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 572, in execute
-    self._adapt_connection.await_(
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 131, in await_only
-    return current.driver.switch(awaitable)  # type: ignore[no-any-return]
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 196, in greenlet_spawn
-    value = await result
-            ^^^^^^^^^^^^
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 550, in _prepare_and_execute
-    self._handle_exception(error)
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 501, in _handle_exception
-    self._adapt_connection._handle_exception(error)
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 789, in _handle_exception
-    raise translated_error from error
-sqlalchemy.exc.ProgrammingError: (sqlalchemy.dialects.postgresql.asyncpg.ProgrammingError) <class 'asyncpg.exceptions.UndefinedColumnError'>: column users.pay_status does not exist
-[SQL: SELECT users.id, users.telegram_id, users.telegram_name, users.name, users.surname, users.middle_name, users.number, users.email, users.active, users.is_banned, users.user_coin, users.pay_status, users.created, users.updated 
-FROM users 
-WHERE users.telegram_id = $1::BIGINT]
-[parameters: (6432327874,)]
-(Background on this error at: https://sqlalche.me/e/20/f405)
-INFO - (26/05/2024 16:23:48): BEGIN (implicit) (line 2699) [base.py]
-INFO - (26/05/2024 16:23:48): SELECT users.user_coin 
-FROM users (line 1846) [base.py]
-INFO - (26/05/2024 16:23:48): [generated in 0.00072s] () (line 1846) [base.py]
-INFO - (26/05/2024 16:23:48): ROLLBACK (line 2702) [base.py]
-INFO - (26/05/2024 16:23:48): BEGIN (implicit) (line 2699) [base.py]
-INFO - (26/05/2024 16:23:48): SELECT users.pay_status 
-FROM users 
-WHERE users.telegram_id = $1::BIGINT (line 1846) [base.py]
-INFO - (26/05/2024 16:23:48): [generated in 0.00113s] (6432327874,) (line 1846) [base.py]
-INFO - (26/05/2024 16:23:48): ROLLBACK (line 2702) [base.py]
-ERROR - (26/05/2024 16:23:48): Ошибка при проверке статуса оплаты: (sqlalchemy.dialects.postgresql.asyncpg.ProgrammingError) <class 'asyncpg.exceptions.UndefinedColumnError'>: column users.pay_status does not exist
-[SQL: SELECT users.pay_status 
-FROM users 
-WHERE users.telegram_id = $1::BIGINT]
-[parameters: (6432327874,)]
-(Background on this error at: https://sqlalche.me/e/20/f405) (line 69) [utils.py]
-Traceback (most recent call last):
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 514, in _prepare_and_execute
-    prepared_stmt, attributes = await adapt_connection._prepare(
-                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 765, in _prepare
-    prepared_stmt = await self._connection.prepare(
-                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\asyncpg\connection.py", line 636, in prepare
-    return await self._prepare(
-           ^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\asyncpg\connection.py", line 654, in _prepare
-    stmt = await self._get_statement(
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\asyncpg\connection.py", line 433, in _get_statement
-    statement = await self._protocol.prepare(
-                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "asyncpg\protocol\protocol.pyx", line 166, in prepare
-asyncpg.exceptions.UndefinedColumnError: column users.pay_status does not exist
-
-The above exception was the direct cause of the following exception:
-
-Traceback (most recent call last):
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
-    self.dialect.do_execute(
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 924, in do_execute
-    cursor.execute(statement, parameters)
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 572, in execute
-    self._adapt_connection.await_(
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 131, in await_only
-    return current.driver.switch(awaitable)  # type: ignore[no-any-return]
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 196, in greenlet_spawn
-    value = await result
-            ^^^^^^^^^^^^
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 550, in _prepare_and_execute
-    self._handle_exception(error)
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 501, in _handle_exception
-    self._adapt_connection._handle_exception(error)
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 789, in _handle_exception
-    raise translated_error from error
-sqlalchemy.dialects.postgresql.asyncpg.AsyncAdapt_asyncpg_dbapi.ProgrammingError: <class 'asyncpg.exceptions.UndefinedColumnError'>: column users.pay_status does not exist
-
-The above exception was the direct cause of the following exception:
-
-Traceback (most recent call last):
-  File "c:\Users\miko12\Desktop\socforum_bot\bot\tools\database\utils.py", line 62, in check_pay_status
-    result = await session.execute(query)
-             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\ext\asyncio\session.py", line 461, in execute
-    result = await greenlet_spawn(
-             ^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 201, in greenlet_spawn
-    result = context.throw(*sys.exc_info())
-             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2351, in execute
-    return self._execute_internal(
-           ^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2236, in _execute_internal
-    result: Result[Any] = compile_state_cls.orm_execute_statement(
-                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\orm\context.py", line 293, in orm_execute_statement
-    result = conn.execute(
-             ^^^^^^^^^^^^^
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1418, in execute
-    return meth(
-           ^^^^^
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 515, in _execute_on_connection
-    return connection._execute_clauseelement(
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1640, in _execute_clauseelement
-    ret = self._execute_context(
-          ^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1846, in _execute_context
-    return self._exec_single_context(
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1986, in _exec_single_context
-    self._handle_dbapi_exception(
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2353, in _handle_dbapi_exception
-    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
-    self.dialect.do_execute(
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 924, in do_execute
-    cursor.execute(statement, parameters)
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 572, in execute
-    self._adapt_connection.await_(
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 131, in await_only
-    return current.driver.switch(awaitable)  # type: ignore[no-any-return]
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 196, in greenlet_spawn
-    value = await result
-            ^^^^^^^^^^^^
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 550, in _prepare_and_execute
-    self._handle_exception(error)
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 501, in _handle_exception
-    self._adapt_connection._handle_exception(error)
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 789, in _handle_exception
-    raise translated_error from error
-sqlalchemy.exc.ProgrammingError: (sqlalchemy.dialects.postgresql.asyncpg.ProgrammingError) <class 'asyncpg.exceptions.UndefinedColumnError'>: column users.pay_status does not exist
-[SQL: SELECT users.pay_status 
-FROM users 
-WHERE users.telegram_id = $1::BIGINT]
-[parameters: (6432327874,)]
-(Background on this error at: https://sqlalche.me/e/20/f405)
-ERROR - (26/05/2024 16:23:49): Пользователь не найден. (line 184) [user.py]
-ERROR - (26/05/2024 16:23:58): Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientOSError: [WinError 1236] The network connection was aborted by the local system (line 219) [dispatcher.py]
-INFO - (26/05/2024 16:23:59): BEGIN (implicit) (line 2699) [base.py]
-INFO - (26/05/2024 16:23:59): SELECT users.id, users.telegram_id, users.telegram_name, users.name, users.surname, users.middle_name, users.number, users.email, users.active, users.is_banned, users.user_coin, users.pay_status, users.created, users.updated 
-FROM users 
-WHERE users.telegram_id = $1::BIGINT (line 1846) [base.py]
-INFO - (26/05/2024 16:23:59): [cached since 65.85s ago] (6432327874,) (line 1846) [base.py]
-INFO - (26/05/2024 16:23:59): ROLLBACK (line 2702) [base.py]
-ERROR - (26/05/2024 16:23:59): Ошибка при получении пользователя из базы данных: (sqlalchemy.dialects.postgresql.asyncpg.ProgrammingError) <class 'asyncpg.exceptions.UndefinedColumnError'>: column users.pay_status does not exist
-[SQL: SELECT users.id, users.telegram_id, users.telegram_name, users.name, users.surname, users.middle_name, users.number, users.email, users.active, users.is_banned, users.user_coin, users.pay_status, users.created, users.updated 
-FROM users 
-WHERE users.telegram_id = $1::BIGINT]
-[parameters: (6432327874,)]
-(Background on this error at: https://sqlalche.me/e/20/f405) (line 37) [utils.py]
-Traceback (most recent call last):
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 514, in _prepare_and_execute
-    prepared_stmt, attributes = await adapt_connection._prepare(
-                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 765, in _prepare
-    prepared_stmt = await self._connection.prepare(
-                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\asyncpg\connection.py", line 636, in prepare
-    return await self._prepare(
-           ^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\asyncpg\connection.py", line 654, in _prepare
-    stmt = await self._get_statement(
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\asyncpg\connection.py", line 433, in _get_statement
-    statement = await self._protocol.prepare(
-                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "asyncpg\protocol\protocol.pyx", line 166, in prepare
-asyncpg.exceptions.UndefinedColumnError: column users.pay_status does not exist
-
-The above exception was the direct cause of the following exception:
-
-Traceback (most recent call last):
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
-    self.dialect.do_execute(
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 924, in do_execute
-    cursor.execute(statement, parameters)
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 572, in execute
-    self._adapt_connection.await_(
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 131, in await_only
-    return current.driver.switch(awaitable)  # type: ignore[no-any-return]
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 196, in greenlet_spawn
-    value = await result
-            ^^^^^^^^^^^^
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 550, in _prepare_and_execute
-    self._handle_exception(error)
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 501, in _handle_exception
-    self._adapt_connection._handle_exception(error)
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 789, in _handle_exception
-    raise translated_error from error
-sqlalchemy.dialects.postgresql.asyncpg.AsyncAdapt_asyncpg_dbapi.ProgrammingError: <class 'asyncpg.exceptions.UndefinedColumnError'>: column users.pay_status does not exist
-
-The above exception was the direct cause of the following exception:
-
-Traceback (most recent call last):
-  File "c:\Users\miko12\Desktop\socforum_bot\bot\tools\database\utils.py", line 34, in orm_get_user
-    result = await session.execute(query)
-             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\ext\asyncio\session.py", line 461, in execute
-    result = await greenlet_spawn(
-             ^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 201, in greenlet_spawn
-    result = context.throw(*sys.exc_info())
-             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2351, in execute
-    return self._execute_internal(
-           ^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2236, in _execute_internal
-    result: Result[Any] = compile_state_cls.orm_execute_statement(
-                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\orm\context.py", line 293, in orm_execute_statement
-    result = conn.execute(
-             ^^^^^^^^^^^^^
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1418, in execute
-    return meth(
-           ^^^^^
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 515, in _execute_on_connection
-    return connection._execute_clauseelement(
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1640, in _execute_clauseelement
-    ret = self._execute_context(
-          ^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1846, in _execute_context
-    return self._exec_single_context(
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1986, in _exec_single_context
-    self._handle_dbapi_exception(
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2353, in _handle_dbapi_exception
-    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
-    self.dialect.do_execute(
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 924, in do_execute
-    cursor.execute(statement, parameters)
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 572, in execute
-    self._adapt_connection.await_(
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 131, in await_only
-    return current.driver.switch(awaitable)  # type: ignore[no-any-return]
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 196, in greenlet_spawn
-    value = await result
-            ^^^^^^^^^^^^
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 550, in _prepare_and_execute
-    self._handle_exception(error)
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 501, in _handle_exception
-    self._adapt_connection._handle_exception(error)
-  File "C:\Users\miko12\Desktop\socforum_bot\.venv\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 789, in _handle_exception
-    raise translated_error from error
-sqlalchemy.exc.ProgrammingError: (sqlalchemy.dialects.postgresql.asyncpg.ProgrammingError) <class 'asyncpg.exceptions.UndefinedColumnError'>: column users.pay_status does not exist
-[SQL: SELECT users.id, users.telegram_id, users.telegram_name, users.name, users.surname, users.middle_name, users.number, users.email, users.active, users.is_banned, users.user_coin, users.pay_status, users.created, users.updated 
-FROM users 
-WHERE users.telegram_id = $1::BIGINT]
-[parameters: (6432327874,)]
-(Background on this error at: https://sqlalche.me/e/20/f405)
+WHERE users.telegram_id = ? (line 1846) [base.py]
+INFO - (26/05/2024 18:19:25): [generated in 0.00098s] (6432327874,) (line 1846) [base.py]
+INFO - (26/05/2024 18:19:25): ROLLBACK (line 2702) [base.py]
+ERROR - (26/05/2024 18:19:37): Некорректный номер телефона: Номер телефона должен состоять из 11 цифр. Попробуйте ещё раз. (line 84) [user.py]
+ERROR - (26/05/2024 18:19:38): Некорректный номер телефона: Номер телефона должен состоять из 11 цифр. Попробуйте ещё раз. (line 84) [user.py]
+ERROR - (26/05/2024 18:19:46): Некорректный email (line 114) [user.py]
+INFO - (26/05/2024 18:19:51): BEGIN (implicit) (line 2699) [base.py]
+INFO - (26/05/2024 18:19:51): INSERT INTO users (telegram_id, telegram_name, name, surname, middle_name, number, email, active, is_banned, user_coin, pay_status, created, updated) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP) RETURNING id, created, updated (line 1846) [base.py]
+INFO - (26/05/2024 18:19:51): [generated in 0.00089s] (6432327874, '-', 'Иван', 'Коробкин', 'Коробкович', '73333333333', 'email@example.com', 1, 0, 0, 0) (line 1846) [base.py]
+INFO - (26/05/2024 18:19:51): COMMIT (line 2705) [base.py]
