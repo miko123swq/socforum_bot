@@ -1,53 +1,26 @@
-from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
+from aiogram.types import InlineKeyboardMarkup
+from aiogram.types import InlineKeyboardButton
+from aiogram.utils.keyboard import InlineKeyboardBuilder
 
 
-main_menu = InlineKeyboardMarkup(inline_keyboard=[
-  [InlineKeyboardButton(text='Каталог', callback_data='catalog')],
-  [InlineKeyboardButton(text='Личный кабинет', callback_data='personal_area')],
-  [InlineKeyboardButton(text='Оплата', callback_data='payment')],
-  [InlineKeyboardButton(text='Мои Юристы', callback_data='my_lawyers')]
-]) 
+def get_inlineMix_btns(
+    *,
+    btns: dict[str, str],
+    sizes: tuple[int] = (2,)):
+
+    keyboard = InlineKeyboardBuilder()
+
+    for text, value in btns.items():
+        if '://' in value:
+            keyboard.add(InlineKeyboardButton(text=text, url=value))
+        else:
+            keyboard.add(InlineKeyboardButton(text=text, callback_data=value))
+
+    return keyboard.adjust(*sizes).as_markup()
 
 
+# in first button, second argument is 'pay' for payment
 main_menu_for_pay = InlineKeyboardMarkup(inline_keyboard=[
   [InlineKeyboardButton(text='Оплатить услуги Юристов', pay=True)],
   [InlineKeyboardButton(text='Возврат в главное меню', callback_data='return_to_main_menu_from_pay')]
-]) 
-
-
-main_menu_in_my_lawyers = InlineKeyboardMarkup(inline_keyboard=[
-  [InlineKeyboardButton(text='Каталог', callback_data='catalog')],
-  [InlineKeyboardButton(text='Личный кабинет', callback_data='personal_area')],
-  [InlineKeyboardButton(text='Написать Юристу', callback_data='message_to_lawyers')]
-]) 
-
-
-menu_in_personal_area = InlineKeyboardMarkup(inline_keyboard=[
-  [InlineKeyboardButton(text='Каталог', callback_data='catalog')],
-  [InlineKeyboardButton(text='Оплата', callback_data='payment')],
-  [InlineKeyboardButton(text='Мои Юристы', callback_data='my_lawyers')]
-]) 
-
-return_to_main_menu = InlineKeyboardMarkup(inline_keyboard=[
-  [InlineKeyboardButton(text='Возврат в главное меню', callback_data='return_to_main_menu')]
-])
-
-
-payment = InlineKeyboardMarkup(inline_keyboard=[
-  [InlineKeyboardButton(text='Список выбранных Юристов', callback_data='list_of_selected_lawyers')],
-  [InlineKeyboardButton(text='Оплата юридических услуг', callback_data='pay')],
-  [InlineKeyboardButton(text='Возврат в главное меню', callback_data='return_to_main_menu')]
-])
-
-
-payment_layers = InlineKeyboardMarkup(inline_keyboard=[
-  [InlineKeyboardButton(text='Оплатить', callback_data='pay')],
-  [InlineKeyboardButton(text='Возврат в главное меню', callback_data='return_to_main_menu')]
-])
-
-
-#LAWYER
-lawyer_main_menu = InlineKeyboardMarkup(inline_keyboard=[
-  [InlineKeyboardButton(text='Личный кабинет Юриста', callback_data='lawyer_personal_area')],
-  [InlineKeyboardButton(text='Переход на сайт', callback_data='catalog')]
 ]) 

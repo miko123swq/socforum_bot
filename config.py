@@ -1,4 +1,3 @@
 TOKEN = '6543528281:AAGo8RqVokF42tJWFZ8jZX7mIKHA7bM3XhI'
-DB_LITE='sqlite+aiosqlite:///my_base.db'
-#DB_LITE = 'postgresql+asyncpg://bot:qwer@localhost:5432/bot'
+DB_LITE = 'postgresql+asyncpg://bot:qwer@localhost:5432/bot'
 
